@@ -1,0 +1,10 @@
+{
+  "service": "trustvault-secure-documents",
+  "framework": "Flask",
+  "entrypoint": "app:app",
+  "deployment": "Render Blueprint",
+  "health_check": "/login",
+  "persistent_mount": "/var/data",
+  "roles": ["admin", "owner", "viewer"],
+  "features": ["document-level read/edit grants", "immediate future-request revocation", "encrypted file storage", "SHA-256 integrity check", "HMAC chained audit trail", "admin activity view"]
+}

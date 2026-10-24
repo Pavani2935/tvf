@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: trustvault-secure-documents
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --workers 2 --threads 4 --timeout 120
+    healthCheckPath: /login
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: APP_SECRET
+        generateValue: true
+      - key: FILE_MASTER_KEY
+        generateValue: true
+      - key: AUDIT_HMAC_KEY
+        generateValue: true
+      - key: BOOTSTRAP_ADMIN_USER
+        value: admin
+      - key: BOOTSTRAP_ADMIN_PASSWORD
+        sync: false
+      - key: TRUSTVAULT_DATA
+        value: /var/data
+    disk:
+      name: trustvault-data
+      mountPath: /var/data
+      sizeGB: 1
